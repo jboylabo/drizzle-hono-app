@@ -732,3 +732,9 @@ Accepted values: off, on
   }
 }
 ```
+
+### 3. pnpm で `"ci"` スクリプトが動かない
+
+Step 5 では `"ci": "biome ci ."` と書いていますが、**pnpm では `pnpm ci` は Biome ではなく lockfile からのクリーン install** が実行されます（`npm ci` も同様）。
+
+**対処:** スクリプト名を `"biome:ci"` など Biome と分かる名前に変え、実行は `pnpm biome:ci` にします。詳細は [PR-MENTOR-NOTES.md](./PR-MENTOR-NOTES.md) を参照。

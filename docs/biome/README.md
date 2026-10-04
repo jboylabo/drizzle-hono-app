@@ -23,32 +23,37 @@ Biome は 1.x → 2.x で設定の形が大きく変わっているため、ネ�
 
 ---
 
-## このプロジェクトの現状（出発点）
+## このプロジェクトの現状
 
-Biome は **インストール済みだが、まだ 1 行も設定されていない**状態です。
+Biome は **`feat/biome` ブランチで導入済み**です。ハンズオン Step 3〜8 相当まで完了しています。
 
 | 項目 | 現状 |
 |---|---|
 | Biome バージョン | `2.5.15`（`package.json` で exact pin） |
-| パッケージマネージャ | pnpm 11.15.1 / Node 25.9.0 |
-| `biome.json` | **存在しない** |
-| `package.json` の lint / format スクリプト | **存在しない** |
-| ESLint / Prettier / `.editorconfig` | **すべて無し**（移行作業は不要。クリーンに入れられる） |
+| `biome.json` | あり（formatter / linter / assist / files 除外 設定済み） |
+| `package.json` scripts | `check` / `check:write` / `biome:ci` など 7 本 |
+| ESLint / Prettier | 無し（移行作業は不要） |
 | スタック | Hono + JSX SSR on Cloudflare Workers + Vite 8 |
-| `tsconfig.json` | `jsx: "react-jsx"` / `jsxImportSource: "hono/jsx"` |
-| 既存コードのスタイル | **シングルクォート / セミコロンなし / スペース 2** |
-
-設定が無くても Biome は内蔵デフォルトで動きます。今この状態で検査すると、こうなります。
+| 既存コードのスタイル | シングルクォート / セミコロンなし / スペース 2 |
 
 ```console
-$ pnpm exec biome check . --reporter=summary
+$ pnpm check
 ```
 
-- **7 ファイルが未フォーマット** … `package.json` / `src/index.tsx` / `src/renderer.tsx` / `src/style.css` / `tsconfig.json` / `vite.config.ts` / `wrangler.jsonc`
-- **lint エラー 1 件** … `lint/a11y/useHtmlLang` @ `src/renderer.tsx`（`<html>` に `lang` 属性が無い）
+→ エラー 0 が期待値です。
+
+**PR 作成の練習**をする場合は [PR-MENTOR-NOTES.md](./PR-MENTOR-NOTES.md)（メンター視点の推奨設定・PR 本文テンプレート）を参照してください。
+
+まだ Biome を入れていない状態から始める場合は、以下の「出発点」を参考に [02-setup-handson.md](./02-setup-handson.md) を進めてください。
+
+<details>
+<summary>出発点（Biome 未導入時）</summary>
+
+- **7 ファイルが未フォーマット** … `package.json` / `src/` / `tsconfig.json` 等
+- **lint エラー 1 件** … `lint/a11y/useHtmlLang` @ `src/renderer.tsx`
 - 合計 **8 errors**
 
-この「8 errors」を 0 にするまでを [02-setup-handson.md](./02-setup-handson.md) でやります。
+</details>
 
 > **注意**: Biome のデフォルトは **タブ / ダブルクォート / セミコロンあり / 行幅 80** です。
 > 一方このプロジェクトの既存コードは **スペース 2 / シングルクォート / セミコロンなし**。

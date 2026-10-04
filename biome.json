@@ -6,7 +6,8 @@
     "useIgnoreFile": true
   },
   "files": {
-    "ignoreUnknown": false
+    "includes": ["**", "!**/dist", "!**/.wrangler", "!**/drizzle/**/*.sql"],
+    "ignoreUnknown": true
   },
   "formatter": {
     "enabled": true,
@@ -19,15 +20,24 @@
     "enabled": true,
     "rules": {
       "preset": "recommended"
+    },
+    "domains": {
+      "project": "recommended"
     }
   },
   "javascript": {
+    "jsxRuntime": "transparent",
     "formatter": {
       "quoteStyle": "single",
       "jsxQuoteStyle": "double",
       "semicolons": "asNeeded",
       "trailingCommas": "all",
       "arrowParentheses": "always"
+    }
+  },
+  "json": {
+    "formatter": {
+      "trailingCommas": "none"
     }
   },
   "assist": {
