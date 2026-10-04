@@ -1,3 +1,153 @@
-h1 {
-  font-family: Arial, Helvetica, sans-serif;
+:root {
+  color-scheme: light;
+  --bg: #f6f3ee;
+  --ink: #1d1a16;
+  --muted: #6b645c;
+  --panel: #fffdf9;
+  --line: #ddd4c8;
+  --accent: #0f6b5c;
+  --danger: #9b2c2c;
+  --focus: #c45c26;
+  font-family: "IBM Plex Sans JP", "Hiragino Sans", "Noto Sans JP", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at top left, rgba(15, 107, 92, 0.12), transparent 40%),
+    linear-gradient(180deg, #fbf8f3 0%, var(--bg) 100%);
+}
+
+.notes-app {
+  width: min(720px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 2.5rem 0 4rem;
+}
+
+.notes-header h1 {
+  margin: 0 0 0.35rem;
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  letter-spacing: -0.03em;
+}
+
+.notes-header p,
+.muted,
+.status {
+  color: var(--muted);
+}
+
+.notes-form-panel,
+.note-item {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+
+.notes-form-panel {
+  margin: 1.75rem 0;
+}
+
+label {
+  display: grid;
+  gap: 0.4rem;
+  margin-bottom: 0.9rem;
+  font-size: 0.9rem;
+}
+
+input,
+textarea,
+button {
+  font: inherit;
+}
+
+input,
+textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.7rem 0.8rem;
+  background: #fff;
+}
+
+input:focus,
+textarea:focus {
+  outline: 2px solid color-mix(in srgb, var(--focus) 55%, white);
+  border-color: var(--focus);
+}
+
+.notes-actions {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.55rem 1rem;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+}
+
+button.secondary {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+
+button.danger {
+  background: var(--danger);
+}
+
+button.hidden,
+.hidden {
+  display: none;
+}
+
+.status {
+  min-height: 1.25rem;
+  margin: 0.85rem 0 0;
+  font-size: 0.9rem;
+}
+
+.status.error {
+  color: var(--danger);
+}
+
+.note-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.85rem;
+}
+
+.note-item {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.note-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: baseline;
+}
+
+.note-body {
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.empty {
+  color: var(--muted);
+  padding: 1rem 0;
 }
