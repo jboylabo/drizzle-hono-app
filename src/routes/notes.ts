@@ -48,6 +48,25 @@ export const notesRoute = new Hono<NotesEnv>()
       .returning()
     return c.json(row, 201)
   })
+  .patch('/:id', async (c) => {
+    const db = c.get('db')
+    const id = c.req.param('id')
+    const body = await c.req.json<{ title?: string; body?: string }>()
+    if (body.title !== undefined && !body.title.trim()) {
+      return c.json({ error: 'title cannot be empty' }, 400)
+    }
+    const values: { title?: string; body?: string | null } = {}
+    if (body.title !== undefined) values.title = body.title.trim()
+    if (body.body !== undefined) values.body = body.body
+    if (Object.keys(values).length === 0) {
+      return c.json({ error: 'title or body is required' }, 400)
+    }
+    const [row] = await db.update(notes).set(values).where(eq(notes.id, id)).returning()
+    if (!row) {
+      return c.json({ error: 'Note not found' }, 404)
+    }
+    return c.json(row)
+  })
   .delete('/:id', async (c) => {
     const db = c.get('db')
     const id = c.req.param('id')
