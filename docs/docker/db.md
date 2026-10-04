@@ -118,14 +118,39 @@ DELETE /api/notes/:id
 
 **学習用ローカル dev では `postgres`（postgres.js）を推奨**します。`pg` ではなくこちらを入れ直すのがポイントです。
 
-```ts
-// src/db/client.ts（イメージ）
-import { drizzle } from 'drizzle-orm/postgres-js'
-import postgres from 'postgres'
+### Phase 2 実装済み（2026-10-04）
 
-const sql = postgres(process.env.DATABASE_URL!)
-export const db = drizzle(sql)
+| ファイル | 内容 |
+|---|---|
+| `src/routes/notes.ts` | GET / POST / DELETE CRUD |
+| `src/index.tsx` | `app.route('/api/notes', notesRoute)`（renderer の**前**にマウント） |
+| `wrangler.jsonc` | `nodejs_compat` フラグ |
+| `.dev.vars.example` | Workers ローカル dev 用 `DATABASE_URL` |
+
+**Workers では DB 接続をリクエストごとに作る。** モジュール直下の singleton `db` だと 2 リクエスト目以降で `Cannot perform I/O on behalf of a different request` になる。`createDb()` + middleware で `sql.end()` すること。
+
+```ts
+// src/db/client.ts
+export function createDb() {
+  const sql = postgres(process.env.DATABASE_URL!, { max: 1 })
+  return { db: drizzle(sql, { schema }), sql }
+}
 ```
+
+### Phase 2 完了チェックリスト
+
+```console
+cp .dev.vars.example .dev.vars   # drizzle-kit 用 .env とは別
+pnpm db:up
+pnpm dev
+
+curl http://localhost:5173/api/notes
+curl http://localhost:5173/api/notes/<id>
+curl -X POST http://localhost:5173/api/notes -H 'Content-Type: application/json' -d '{"title":"test"}'
+curl -X DELETE http://localhost:5173/api/notes/<id>
+```
+
+4 エンドポイントすべて JSON が返れば Phase 2 完了。
 
 ---
 

@@ -23,11 +23,16 @@
     "biome:ci": "biome ci ."
   },
   "dependencies": {
-    "hono": "^4.13.13"
+    "dotenv": "^17.2.3",
+    "drizzle-orm": "^0.45.1",
+    "hono": "^4.13.13",
+    "postgres": "^3.4.7"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.15",
     "@cloudflare/vite-plugin": "^1.44.0",
+    "drizzle-kit": "^0.31.8",
+    "tsx": "^4.21.0",
     "vite": "^8.1.4",
     "vite-ssr-components": "^0.8.0",
     "wrangler": "^4.110.0"
